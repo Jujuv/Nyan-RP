@@ -23,8 +23,7 @@ Divers directives de pre-processeur imposés par YSI
 Inclusion de bibliotheques de bases
 */
 #include <a_samp>
-#include <YSI>
-#include <Commons\Y_Less\foreach>
+#include <nyanrp>
 
 /*
 Macros divers
@@ -126,11 +125,11 @@ stock SendMessageToNearPlayers(playerid, message[], color0, color1, color2, colo
 	{
 		if(ProxDetector(playerid, targetid, 2.0))
 			SendClientMessage(targetid, color0, message);
-		else if(ProxDetector(playerid, targetid, 4.0)
+		else if(ProxDetector(playerid, targetid, 4.0))
 			SendClientMessage(targetid, color1, message);
-		else if(ProxDetector(playerid, targetid, 6.0)
+		else if(ProxDetector(playerid, targetid, 6.0))
 			SendClientMessage(targetid, color2, message);
-		else if(ProxDetector(playerid, targetid, 8.0)
+		else if(ProxDetector(playerid, targetid, 8.0))
 			SendClientMessage(targetid, color3, message);
 	}
 }
@@ -193,7 +192,7 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnPlayerText(playerid, text[])
 {
-	SendMessageToNearPlayers(playerid, text, 
+	//SendMessageToNearPlayers(playerid, text, 
 	return 1;
 }
 

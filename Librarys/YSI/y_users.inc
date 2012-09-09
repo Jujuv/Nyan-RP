@@ -823,7 +823,7 @@ stock Player_DeleteTag(tag[])
 }
 
 //global Player_DoLogout(playerid, yid)
-static stock Player_DoLogout(playerid, yid)
+/*static*/ stock Player_DoLogout(playerid, yid)
 {
 	/*INI:YSI_g_sOneLogoutFile = INI_NO_FILE
 	YSI_g_sOneLogoutPerson = INVALID_PLAYER_ID*/

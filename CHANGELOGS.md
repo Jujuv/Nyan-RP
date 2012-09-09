@@ -1,10 +1,15 @@
-Milestone 01A (M01):
+﻿Milestone 01A (M01):
 	-Version intial
 
 Milestone 01B (M01B):
 	-Divers corrections
 
-Milestone 02 (M02A):
+Milestone 02A (M02A):
 	-Supression de Y_Language / Y_Text (qui �tais int�gr� � Y_Users)
 	-La fonction SendMessageToNearPlayers() utilise d�sormais les couleurs "embeded" (1 couleur pour le nom du joueur, 1 autre pour le message)
 	-Correction d'un minuscule oubli
+Milestone 02B (M02B):
+	-Corrections de bugs liés à foreach
+Milestone 03 (M03A):
+	-Systeme d'inscription & login continué
+	-Divers optimisations mineurs

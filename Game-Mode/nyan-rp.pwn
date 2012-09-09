@@ -1,20 +1,16 @@
 /*
-Nyan-RP est un GM de type RP crée dans le seul but d'être partagé pubiquement et de divertir son auteur.
-Nyan-RP est un GM crée par Jujuv (ou Pseudonyme).
-Nyan-RP utilise toute fois un certains nombre de bibliotheques libres afin de simplifier le developement.
-
-Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet Another RP" (YAN-RP) à la-quel est venu s'ajouter la lettre "N" pour réaliser un jeu de mot avec le mot japonais "nyan" (litéralement "miaou")
-
-Rien ne vous oblige à laisser à laisser ces credits originaux, votre conscience est seul maitre de vos choix.
-Toute fois, si vous décidez de retirer ces credits vous aurez, à mrs yeux, fait la preuve d'une proffonde stupidité.
-
-From Jujuv
+Macros divers
 */
+#define MIN_PASSWORD_LENGHT 7
+#define MODE_NAME Nyan-RP M03
 
+#define SetPVarInt(%0,%1,++) SetPVarInt(%0,%1,GetPVarInt(%0,%1)+1)
+#define Player_LogOut(%0) Player_DoLogout(%0, Player_GetYID(%0))
 /*
-Divers directives de pre-processeur imposés par YSI
+Inclusion de bibliotheques
 */
-#define MODE_NAME Nyan-RP M02A
+#include <a_samp>
+#include <nyanrp>
 
 /*
 Macros de couleurs (C_ pour Colors et CE_ pour ColorEmbeding)
@@ -32,19 +28,6 @@ Macros de couleurs (C_ pour Colors et CE_ pour ColorEmbeding)
 #define CE_GREY "{666666}"
 #define CE_BLACK "{000000}"
 
-
-/*
-Inclusion de bibliotheques de bases
-*/
-#include <a_samp>
-#include <nyanrp>
-
-/*
-Macros divers
-*/
-#define MIN_PASSWORD_LENGHT 7
-
-
 /*
 Enumerations divers
 */
@@ -55,7 +38,8 @@ enum//Enumeration des IDs de dialogues
 		dRegisterS3,//Confirmation du mot de passe
 		dRegisterS4,//Choix de l'age
 		dRegisterS5,//Choix de l'origine
-		dRegisterS6//Message de fin d'inscription
+		dRegisterS6,//Message de fin d'inscription
+		dLogin
 }
 
 enum//Enumeration des IDs de pays
@@ -71,28 +55,36 @@ enum//Enumeration des IDs de pays
 
 enum E_PLAYERS
 {
-		pwd,//Stocke le mot de passe hasché
 		age,
 		country,
 		level,
 		money
 }
+
+/*
+Tableaux globales & uvars
+*/
 uvar pInfos[MAX_PLAYERS][E_PLAYERS];
+
+/*
+Prototypes de fonctions publique
+*/
+forward OnPlayerFirstConnect(playerid);
+forward OnPlayerConnectAgain(playerid);
+forward OnPlayerLoginFail(playerid);
+forward OnPlayerRegister(playerid);
+forward OnPlayerLoginSucess(playerid);
+
+forward TenMinutesTimer();
 
 /*
 Création de fonctions
 */
-
-
-stock strs(str1[], str2[], bool:ignorecase = true)
+stock strs(str1[], str2[], bool:ignorecase = true)//Copié de Dutils (par Dracoblue)
 {
     if (strlen(str1) != strlen(str2)) return false;
     if (!strcmp(str1, str2, ignorecase)) return true;
     return false;
-	
-	/*
-	Fonction honteusement copié de Dutils (de Dracoblue)
-	*/
 }
 
 stock GivePlayerName(playerid)
@@ -109,16 +101,7 @@ stock GetPVarStringEx(playerid, vName[])
 	return string;
 }
 
-forward OnPlayerFirstConnect(playerid);
-public OnPlayerFirstConnect(playerid)
-{
-	new message[255];
-	format(message, sizeof(message), "Bonjour %s !\n Bienvenue sur Nyan-RP, un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GivePlayerName(playerid));
-	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
-}
-
-forward ProxDetector(playerid, targetid, Float:range);
-public ProxDetector(playerid, targetid, Float:range)  
+stock ProxDetector(playerid, targetid, Float:range)  
 {
     if(GetPlayerVirtualWorld(playerid) != GetPlayerVirtualWorld(targetid) || GetPlayerInterior(playerid) != GetPlayerInterior(playerid))
         return 0;
@@ -128,10 +111,6 @@ public ProxDetector(playerid, targetid, Float:range)
     return IsPlayerInRangeOfPoint(targetid, range, posX, posY, posZ); 
 }
 
-
-/*
-ATTENTION: Cette fonction utilise des couleurs "intégrés" ("embedded colors") et ne dois pas recevoir de couleur RGBA en parrametre
-*/
 stock SendMessageToNearPlayers(playerid, message[], nameColor[], color1[], color2[], color3[])
 {
 	new output[250];//Chaine de carractére correspondant au message affiché au joueur
@@ -166,6 +145,40 @@ stock SendMessageToNearPlayers(playerid, message[], nameColor[], color1[], color
 	}
 }
 
+stock AutoSavePlayersDatas()
+{
+	print("[WARNING] Sauvegarde automatique des comptes des joueurs connéctés en cours");
+	foreach(new playerid : Player)
+	{
+		if(!IsPlayerNPC(playerid))
+			SavePlayerDatas(playerid);
+	}
+}
+
+stock SavePlayerDatas(playerid)
+{
+	if(!Player_IsLoggedIn(playerid))
+		return 1;
+		
+	Player_LogOut(playerid);
+	Player_ForceLogin(playerid);
+	
+	return 0;
+		
+	
+}
+
+stock Player_Login(playerid)
+{
+	new message[60+MAX_PLAYER_NAME];
+	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GivePlayerName(playerid));
+	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", message, "Login", "Annuler");
+}
+
+/*
+Callbacks
+*/
+
 main()
 {
 	print("\n----------------------------------");
@@ -177,7 +190,7 @@ public OnGameModeInit()
 {
 	SetGameModeText("Nyan-RP");
 	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0);
-	
+	SetTimer("TenMinutestimer", 10*1000*60, true);
 	
 	return 1;
 }
@@ -189,6 +202,7 @@ public OnGameModeExit()
 
 public OnPlayerRequestClass(playerid, classid)
 {
+	SpawnPlayer(playerid);
 	return 1;
 }
 
@@ -196,6 +210,8 @@ public OnPlayerConnect(playerid)
 {
 	if(!Player_IsRegistered(playerid))
 		OnPlayerFirstConnect(playerid);
+	else
+		OnPlayerConnectAgain(playerid);
 	return 1;
 }
 
@@ -385,13 +401,13 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Erreur. Le mot de passe choisie est trop court", "Ok", "Annuler");
 			else
 			{
-				pInfos[playerid][pwd] = YHash(inputtext);
+				SetPVarInt(playerid, "HashedPassword", YHash(inputtext));
 				return ShowPlayerDialog(playerid, dRegisterS3, DIALOG_STYLE_PASSWORD, "Verification du mot de passe", "Afin d'éviter toute erreur lors du choix de votre mot de passe, nous vous demandons de bien vouloir le rentrer de nouveau.", "Ok", "Annuler");
 			}
 		}
 		case dRegisterS3:
 		{
-			if(YHash(inputtext) != pInfos[playerid][pwd])
+			if(YHash(inputtext) != GetPVarInt(playerid, "HashedPassword"))
 				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Vous avez entrer deux mots de passes différents.\nRéesayez. !", "Ok", "Annuler");
 			else//Idée honteusement copié de Wonderful-Life RP
 			{
@@ -409,7 +425,15 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 			pInfos[playerid][country] = listitem;
 			ShowPlayerDialog(playerid, dRegisterS6, DIALOG_STYLE_MSGBOX, "Inscription términée !", "Votre inscription est términée !\nVous pouvez désormais jouer.", "Ok", "Annuler");
 			Player_TryRegister(playerid, GetPVarStringEx(playerid, "CleanPassword"));
+			OnPlayerRegister(playerid);
 			return SetPVarString(playerid, "CleanPassword", "None");//Réduis les risques de vol du mot de passe via des "injections de script"
+		}
+		case dLogin:
+		{
+			Player_TryLogin(playerid, inputtext);
+			
+			if(!Player_IsLoggedIn(playerid))
+				OnPlayerLoginFail(playerid);
 		}
 	}
 	return 1;
@@ -419,3 +443,335 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 {
 	return 1;
 }
+
+/*
+Callbacks ajoutées
+*/
+public OnPlayerFirstConnect(playerid)
+{
+	new message[220+MAX_PLAYER_NAME];
+	format(message, sizeof(message), "Bonjour %s !\n Bienvenue sur Nyan-RP, un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GivePlayerName(playerid));
+	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
+}
+
+public OnPlayerConnectAgain(playerid)
+{
+	Player_Login(playerid);
+}
+
+public OnPlayerLoginFail(playerid)
+{
+	SetPVarInt(playerid, "LoginFail", ++);
+	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Mot de passe incorrect !\nré-essayez", "Login", "Annuler");
+}
+
+public OnPlayerLoginSucess(playerid)
+{
+
+}
+
+public OnPlayerRegister(playerid)
+{
+	Player_Login(playerid);
+}
+
+public TenMinutesTimer()//Appelé toutes les 10 minutes
+{
+	AutoSavePlayersDatas();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

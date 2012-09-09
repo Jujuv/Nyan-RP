@@ -3,7 +3,7 @@ Nyan-RP est un GM de type RP crée dans le seul but d'être partagé pubiquement et
 Nyan-RP est un GM crée par Jujuv (ou Pseudonyme).
 Nyan-RP utilise toute fois un certains nombre de bibliotheques libres afin de simplifier le developement.
 
-Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet Another RP" (YAN-RP) à la-quel est venu s'ajouter la lettre "n" pour réaliser un jeu de mot avec le mot japonais "nyan" (litéralement "miaou")
+Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet Another RP" (YAN-RP) à la-quel est venu s'ajouter la lettre "N" pour réaliser un jeu de mot avec le mot japonais "nyan" (litéralement "miaou")
 
 Rien ne vous oblige à laisser à laisser ces credits originaux, votre conscience est seul maitre de vos choix.
 Toute fois, si vous décidez de retirer ces credits vous aurez, à mrs yeux, fait la preuve d'une proffonde stupidité.
@@ -14,9 +14,23 @@ From Jujuv
 /*
 Divers directives de pre-processeur imposés par YSI
 */
-#define MODE_NAME Nyan-RP M01B
-#pragma unused Langs_AddLanguage
+#define MODE_NAME Nyan-RP M02A
 
+/*
+Macros de couleurs (C_ pour Colors et CE_ pour ColorEmbeding)
+*/
+#define C_WHITE 0xFFFFFFFF
+#define C_BLACK 0x000000FF
+#define C_GREY 0x0000007F
+#define C_RED 0xFF0000C3
+#define C_BLUE 0x0000FFAA
+#define C_YELLOW 0xFFCE0092
+#define C_ORANGE 0xE67A00FF
+
+#define CE_PURPPLE "{8C3C63}"
+#define CE_WHITE "{FFFFFF}"
+#define CE_GREY "{666666}"
+#define CE_BLACK "{000000}"
 
 
 /*
@@ -48,12 +62,11 @@ enum//Enumeration des IDs de pays
 {
 		nAmerica,//North America (Amerique du Nord / USA)
 		mAmerica,//Middle America (Amerique centrale)
-		sAmerica,//South America (Amerique du Sud
+		sAmerica,//South America (Amerique du Sud)
 		asia,//Asie
 		europe,//Europe
 		nAfrica,//North Africa (Afrique du Nord)
 		sAfrica//South Africa (Afrique du Sud)
-		
 }
 
 enum E_PLAYERS
@@ -107,9 +120,7 @@ public OnPlayerFirstConnect(playerid)
 forward ProxDetector(playerid, targetid, Float:range);
 public ProxDetector(playerid, targetid, Float:range)  
 {
-    if(!(IsPlayerConnected(playerid) || IsPlayerConnected(targetid)) || playerid == targetid)
-        return 0;
-    if(!(GetPlayerVirtualWorld(playerid) == GetPlayerVirtualWorld(targetid) && GetPlayerInterior(playerid) == GetPlayerInterior(playerid)))
+    if(GetPlayerVirtualWorld(playerid) != GetPlayerVirtualWorld(targetid) || GetPlayerInterior(playerid) != GetPlayerInterior(playerid))
         return 0;
 
     new Float:posX, Float:posY, Float:posZ;  
@@ -117,20 +128,41 @@ public ProxDetector(playerid, targetid, Float:range)
     return IsPlayerInRangeOfPoint(targetid, range, posX, posY, posZ); 
 }
 
-stock SendMessageToNearPlayers(playerid, message[], color0, color1, color2, color3)
+
+/*
+ATTENTION: Cette fonction utilise des couleurs "intégrés" ("embedded colors") et ne dois pas recevoir de couleur RGBA en parrametre
+*/
+stock SendMessageToNearPlayers(playerid, message[], nameColor[], color1[], color2[], color3[])
 {
-	format(message, strlen(message), "%s: %s", GivePlayerName(playerid), message);
+	new output[250];//Chaine de carractére correspondant au message affiché au joueur
+	new bool:send = false;//Le message dois t-il être envoyé ?
+	
+	format(output, sizeof(output), "%s%s: ", nameColor, GivePlayerName(playerid));//On incoropore le nom du joueur (avec sa couleur)
 	
 	foreach(new targetid : Player)
 	{
 		if(ProxDetector(playerid, targetid, 2.0))
-			SendClientMessage(targetid, color0, message);
+			{
+				strcat(output, color1);//On incopore le code couleur correspondant au "range"
+				send = true;//Il est bien dans l-un des "ranges" désirés, alors on lui envoie
+			}
 		else if(ProxDetector(playerid, targetid, 4.0))
-			SendClientMessage(targetid, color1, message);
+			{
+				strcat(output, color2);
+				send = true;
+			}
 		else if(ProxDetector(playerid, targetid, 6.0))
-			SendClientMessage(targetid, color2, message);
-		else if(ProxDetector(playerid, targetid, 8.0))
-			SendClientMessage(targetid, color3, message);
+			{
+				strcat(output, color3);
+				send = true;
+			}
+			
+		if(send)//Si il est dans un des 3 "ranges"
+		{
+				strcat(output, message);//on incorpore le message
+				SendClientMessage(targetid, -1, output);//on le lui envoie
+		}
+		
 	}
 }
 
@@ -162,6 +194,8 @@ public OnPlayerRequestClass(playerid, classid)
 
 public OnPlayerConnect(playerid)
 {
+	if(!Player_IsRegistered(playerid))
+		OnPlayerFirstConnect(playerid);
 	return 1;
 }
 
@@ -192,8 +226,8 @@ public OnVehicleDeath(vehicleid, killerid)
 
 public OnPlayerText(playerid, text[])
 {
-	//SendMessageToNearPlayers(playerid, text, 
-	return 1;
+	SendMessageToNearPlayers(playerid, text, CE_PURPPLE, CE_WHITE, CE_GREY, CE_BLACK);
+	return 0;
 }
 
 public OnPlayerCommandText(playerid, cmdtext[])
@@ -347,7 +381,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		}
 		case dRegisterS2:
 		{
-			if(strlen(inputtext) > MIN_PASSWORD_LENGHT)
+			if(strlen(inputtext) < MIN_PASSWORD_LENGHT)
 				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Erreur. Le mot de passe choisie est trop court", "Ok", "Annuler");
 			else
 			{
@@ -373,7 +407,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		case dRegisterS5:
 		{
 			pInfos[playerid][country] = listitem;
-			ShowPlayerDialog(playerid, dRegisterS6, DIALOG_STYLE_LIST, "Inscription términée !", "Votre inscription est términée !\nVous pouvez désormais jouer.", "Ok", "Annuler");
+			ShowPlayerDialog(playerid, dRegisterS6, DIALOG_STYLE_MSGBOX, "Inscription términée !", "Votre inscription est términée !\nVous pouvez désormais jouer.", "Ok", "Annuler");
 			Player_TryRegister(playerid, GetPVarStringEx(playerid, "CleanPassword"));
 			return SetPVarString(playerid, "CleanPassword", "None");//Réduis les risques de vol du mot de passe via des "injections de script"
 		}

@@ -106,7 +106,7 @@ forward OnPlayerLogout(playerid, yid);
 
 #include "internal\y_version"
 
-#include "y_text"
+//#include "y_text"
 
 #include "y_remote"
 #include "y_debug"
@@ -148,7 +148,7 @@ forward OnPlayerLogout(playerid, yid);
 #define OnUserData[%0](%1) @yU_%0(%1)
 #define PINI:%0(%1) forward OnUserData[%0](%1);public OnUserData[%0](%1)
 
-loadtext core[ysi_players];
+//loadtext core[ysi_players];
 
 enum E_USER_PRELOAD
 {
@@ -218,7 +218,7 @@ stock Player_Preload(string:name[], ret[E_USER_PRELOAD])
 	P:4("Player_Preload called: %s", name);
 	ret[E_USER_PRELOAD_YID] = -2;
 	ret[E_USER_PRELOAD_PASS] = '\0';
-	ret[E_USER_PRELOAD_LANG] = NO_LANGUAGE;
+	//ret[E_USER_PRELOAD_LANG] = NO_LANGUAGE;
 	new
 		namelen = strlen(name),
 		filename[] = USER_FILE_PATH "ind_X.YSI",
@@ -256,7 +256,7 @@ stock Player_Preload(string:name[], ret[E_USER_PRELOAD])
 				//printf("%d %d %d", ret[E_USER_PRELOAD_YID], strval(line), strval("00000022"));
 				//printf("%d", strval(line));
 				line[MAX_INDEX_LENGTH + 1 + MAX_PLAYER_NAME + 1 + MAX_PASSWORD_LENGTH + 1 + 2] = '\0';
-				ret[E_USER_PRELOAD_LANG] = Langs_GetLanguage(line[MAX_INDEX_LENGTH + 1 + MAX_PLAYER_NAME + 1 + MAX_PASSWORD_LENGTH + 1]);
+				//ret[E_USER_PRELOAD_LANG] = Langs_GetLanguage(line[MAX_INDEX_LENGTH + 1 + MAX_PLAYER_NAME + 1 + MAX_PASSWORD_LENGTH + 1]);
 				strcat(ret[E_USER_PRELOAD_PASS], line[MAX_INDEX_LENGTH + 1 + MAX_PLAYER_NAME + 1], MAX_PASSWORD_LENGTH + 1);
 				P:6("Player_Preload: %s %d %d", ret[E_USER_PRELOAD_PASS], ret[E_USER_PRELOAD_YID], _:ret[E_USER_PRELOAD_LANG]);
 				fclose(fIndex);
@@ -380,7 +380,7 @@ static stock Users_DoUpgrade()
 				line[INDEX_DATA_LINE_LENGTH],
 				//Language:def = Langs_GetLanguageAt(0),
 				code[3];
-			strcpy(code, Langs_GetCode(Langs_GetLanguageAt(0)));
+			//strcpy(code, Langs_GetCode(Langs_GetLanguageAt(0)));
 			for (new i = -2; i != 26; ++i)
 			{
 				if (i == -2)
@@ -579,11 +579,7 @@ global Player_TryLogin(playerid, string:password[])
 {
 	P:2("Player_TryLogin start");
 	if (Player_IsLoggedIn(playerid))
-	{
-		// They are already logged in.
-		Text_Send(playerid, $YSI_LOGIN_ALREADY);
-		return 1;
-	}
+		return 1;// They are already logged in.
 	new
 		hash[MAX_PASSWORD_LENGTH + 1];
 	Player_HashPass(password, hash);
@@ -591,12 +587,12 @@ global Player_TryLogin(playerid, string:password[])
 	{
 		case -2:
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
 		}
-		case -1:
+		/*case -1:
 		{
 			Text_Send(playerid, $YSI_LOGIN_NOTF);
-		}
+		}*/
 		default:
 		{
 			// Match the password.
@@ -604,14 +600,14 @@ global Player_TryLogin(playerid, string:password[])
 			{
 				// Extract the yid and call in to the login code.
 				YSI_g_sPreloadData[playerid][E_USER_PRELOAD_PASS] = '\0';
-				Langs_SetPlayerLanguage(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_LANG]);
+				//Langs_SetPlayerLanguage(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_LANG]);
 				broadcastfunc Player_DoLogin(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_YID]);
-				Text_Send(playerid, $YSI_LOGIN_LOGIN);
+				//Text_Send(playerid, $YSI_LOGIN_LOGIN);
 				return 1;
 			}
 			else
 			{
-				Text_Send(playerid, $YSI_LOGIN_WRONG);
+				//Text_Send(playerid, $YSI_LOGIN_WRONG);
 			}
 		}
 	}
@@ -635,26 +631,26 @@ global Player_ForceLogin(playerid)
 	if (Player_IsLoggedIn(playerid))
 	{
 		// They are already logged in.
-		Text_Send(playerid, $YSI_LOGIN_ALREADY);
+		//Text_Send(playerid, $YSI_LOGIN_ALREADY);
 		return 1;
 	}
 	switch (YSI_g_sPreloadData[playerid][E_USER_PRELOAD_YID])
 	{
 		case -2:
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
 		}
-		case -1:
+		/*case -1:
 		{
-			Text_Send(playerid, $YSI_LOGIN_NOTF);
-		}
+			//Text_Send(playerid, $YSI_LOGIN_NOTF);
+		}*/
 		default:
 		{
 			// Extract the yid and call in to the login code.
 			YSI_g_sPreloadData[playerid][E_USER_PRELOAD_PASS] = '\0';
-			Langs_SetPlayerLanguage(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_LANG]);
+			//Langs_SetPlayerLanguage(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_LANG]);
 			broadcastfunc Player_DoLogin(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_YID]);
-			Text_Send(playerid, $YSI_LOGIN_LOGIN);
+			//Text_Send(playerid, $YSI_LOGIN_LOGIN);
 			return 1;
 		}
 	}
@@ -1006,7 +1002,7 @@ global Player_TryRegister(playerid, string:password[])
 	if (Player_IsLoggedIn(playerid))
 	{
 		// They are already logged in.
-		Text_Send(playerid, $YSI_LOGIN_ALREADY);
+		//Text_Send(playerid, $YSI_LOGIN_ALREADY);
 		return 1;
 	}
 	new
@@ -1014,10 +1010,10 @@ global Player_TryRegister(playerid, string:password[])
 	Player_HashPass(password, hash);
 	switch (YSI_g_sPreloadData[playerid][E_USER_PRELOAD_YID])
 	{
-		case -2:
+		/*case -2:
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
-		}
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
+		}*/
 		case -1:
 		{
 		}
@@ -1028,15 +1024,15 @@ global Player_TryRegister(playerid, string:password[])
 			{
 				// Extract the yid and call in to the login code.
 				YSI_g_sPreloadData[playerid][E_USER_PRELOAD_PASS] = '\0';
-				Langs_SetPlayerLanguage(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_LANG]);
+				//Langs_SetPlayerLanguage(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_LANG]);
 				broadcastfunc Player_DoLogin(playerid, YSI_g_sPreloadData[playerid][E_USER_PRELOAD_YID]);
-				Text_Send(playerid, $YSI_LOGIN_LOGIN);
+				//Text_Send(playerid, $YSI_LOGIN_LOGIN);
 				return 1;
 			}
 			else
 			{
 				//Text_Send(playerid, $YSI_LOGIN_WRONG);
-				Text_Send(playerid, $YSI_REG_TAKEN);
+				//Text_Send(playerid, $YSI_REG_TAKEN);
 				return 0;
 			}
 		}
@@ -1063,10 +1059,10 @@ global Player_TryRegister(playerid, string:password[])
 			yid = Player_GetNewID();
 		if (yid == -1)
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
 			return 0;
 		}
-		format(line, sizeof (line), "%0" #MAX_INDEX_LENGTH "d %" #MAX_PLAYER_NAME "s %" #MAX_PASSWORD_LENGTH "s %02s" INI_NEW_LINE, yid, name, hash, Langs_GetCode(Langs_GetPlayerLanguage(playerid)));
+		format(line, sizeof (line), "%0" #MAX_INDEX_LENGTH "d %" #MAX_PLAYER_NAME "s %" #MAX_PASSWORD_LENGTH "s %02s" INI_NEW_LINE, yid, name, hash/*, Langs_GetCode(Langs_GetPlayerLanguage(playerid))*/);
 		fwrite(fIndex, line);
 		fclose(fIndex);
 		format(filename, sizeof (filename), USER_FILE_PATH "%0" #MAX_INDEX_LENGTH "d.INI", yid);
@@ -1074,7 +1070,7 @@ global Player_TryRegister(playerid, string:password[])
 			INI:x = INI_Open(filename);
 		if (x == INI_NO_FILE)
 		{
-			Text_Send(playerid, $YSI_LOGIN_NOLOAD);
+			//Text_Send(playerid, $YSI_LOGIN_NOLOAD);
 		}
 		else
 		{
@@ -1084,12 +1080,12 @@ global Player_TryRegister(playerid, string:password[])
 		}
 		// Call in all scripts.
 		broadcastfunc Player_DoLogin(playerid, yid);
-		Text_Send(playerid, $YSI_LOGIN_LOGIN);
+		//Text_Send(playerid, $YSI_LOGIN_LOGIN);
 		return 1;
 	}
 	else
 	{
-		Text_Send(playerid, $YSI_ADDU_INDER2);
+		//Text_Send(playerid, $YSI_ADDU_INDER2);
 		return 0;
 	}
 }
@@ -1134,7 +1130,7 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 	if (Player_IsLoggedIn(playerid))
 	{
 		// They are already logged in.
-		Text_Send(playerid, $YSI_LOGIN_ALREADY);
+		//Text_Send(playerid, $YSI_LOGIN_ALREADY);
 		return 1;
 	}
 	new
@@ -1145,7 +1141,7 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 	{
 		case -2:
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
 			return 0;
 		}
 		case -1:
@@ -1154,7 +1150,7 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 		}
 		default:
 		{
-			Text_Send(playerid, $YSI_REG_TAKEN);
+			//Text_Send(playerid, $YSI_REG_TAKEN);
 			return 0;
 		}
 	}
@@ -1164,13 +1160,13 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 	Player_Preload(other, ret);
 	switch (ret[E_USER_PRELOAD_YID])
 	{
-		case -2:
+		/*case -2:
 		{
 			Text_Send(playerid, $YSI_LOGIN_INDERR);
-		}
+		}*/
 		case -1:
 		{
-			Text_Send(playerid, $YSI_LOGIN_NOTF);
+			//Text_Send(playerid, $YSI_LOGIN_NOTF);
 		}
 		default:
 		{
@@ -1187,7 +1183,7 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 					File:fIndex = fopen(filename, io_append);
 				if (!fIndex)
 				{
-					Text_Send(playerid, $YSI_ADDU_INDERR2);
+					//Text_Send(playerid, $YSI_ADDU_INDERR2);
 					return 0;
 				}
 				P:5("Player_TryGroup: Write index.");
@@ -1195,7 +1191,7 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 					yid = ret[E_USER_PRELOAD_YID],
 					line[INDEX_DATA_LINE_LENGTH];
 				// Use the loaded ID.
-				format(line, sizeof (line), "%0" #MAX_INDEX_LENGTH "d %" #MAX_PLAYER_NAME "s %" #MAX_PASSWORD_LENGTH "s %02s" INI_NEW_LINE, yid, name, hash, Langs_GetCode(ret[E_USER_PRELOAD_LANG]));
+				format(line, sizeof (line), "%0" #MAX_INDEX_LENGTH "d %" #MAX_PLAYER_NAME "s %" #MAX_PASSWORD_LENGTH "s %02s" INI_NEW_LINE, yid, name, hash/*, Langs_GetCode(ret[E_USER_PRELOAD_LANG])*/);
 				fwrite(fIndex, line);
 				fclose(fIndex);
 				format(filename, sizeof (filename), USER_FILE_PATH "%0" #MAX_INDEX_LENGTH "d.INI", yid);
@@ -1203,7 +1199,7 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 					INI:x = INI_Open(filename);
 				if (x == INI_NO_FILE)
 				{
-					Text_Send(playerid, $YSI_LOGIN_NOLOAD);
+					//Text_Send(playerid, $YSI_LOGIN_NOLOAD);
 				}
 				else
 				{
@@ -1213,15 +1209,15 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 					INI_Close(x);
 				}
 				// Call in all scripts.
-				Langs_SetPlayerLanguage(playerid, ret[E_USER_PRELOAD_LANG]);
+				//Langs_SetPlayerLanguage(playerid, ret[E_USER_PRELOAD_LANG]);
 				broadcastfunc Player_DoLogin(playerid, yid);
-				Text_Send(playerid, $YSI_LOGIN_LOGIN);
+				//Text_Send(playerid, $YSI_LOGIN_LOGIN);
 				return 1;
-			}
+			}/*
 			else
 			{
-				Text_Send(playerid, $YSI_LOGIN_WRONG);
-			}
+				//Text_Send(playerid, $YSI_LOGIN_WRONG);
+			}*/
 		}
 	}
 	return 0;
@@ -1248,7 +1244,7 @@ global Player_ForceGroup(playerid, string:other[])
 	if (Player_IsLoggedIn(playerid))
 	{
 		// They are already logged in.
-		Text_Send(playerid, $YSI_LOGIN_ALREADY);
+		//Text_Send(playerid, $YSI_LOGIN_ALREADY);
 		return 1;
 	}
 	// Check if the user is not registered already.
@@ -1256,7 +1252,7 @@ global Player_ForceGroup(playerid, string:other[])
 	{
 		case -2:
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
 			return 0;
 		}
 		case -1:
@@ -1265,7 +1261,7 @@ global Player_ForceGroup(playerid, string:other[])
 		}
 		default:
 		{
-			Text_Send(playerid, $YSI_REG_TAKEN);
+			//Text_Send(playerid, $YSI_REG_TAKEN);
 			return 0;
 		}
 	}
@@ -1277,11 +1273,11 @@ global Player_ForceGroup(playerid, string:other[])
 	{
 		case -2:
 		{
-			Text_Send(playerid, $YSI_LOGIN_INDERR);
+			//Text_Send(playerid, $YSI_LOGIN_INDERR);
 		}
 		case -1:
 		{
-			Text_Send(playerid, $YSI_LOGIN_NOTF);
+			//Text_Send(playerid, $YSI_LOGIN_NOTF);
 		}
 		default:
 		{
@@ -1295,7 +1291,7 @@ global Player_ForceGroup(playerid, string:other[])
 				File:fIndex = fopen(filename, io_append);
 			if (!fIndex)
 			{
-				Text_Send(playerid, $YSI_ADDU_INDERR2);
+				//Text_Send(playerid, $YSI_ADDU_INDERR2);
 				return 0;
 			}
 			P:5("Player_TryGroup: Write index.");
@@ -1303,7 +1299,7 @@ global Player_ForceGroup(playerid, string:other[])
 				yid = ret[E_USER_PRELOAD_YID],
 				line[INDEX_DATA_LINE_LENGTH];
 			// Use the loaded ID.
-			format(line, sizeof (line), "%0" #MAX_INDEX_LENGTH "d %" #MAX_PLAYER_NAME "s %" #MAX_PASSWORD_LENGTH "s %02s" INI_NEW_LINE, yid, name, ret[E_USER_PRELOAD_PASS], Langs_GetCode(ret[E_USER_PRELOAD_LANG]));
+			format(line, sizeof (line), "%0" #MAX_INDEX_LENGTH "d %" #MAX_PLAYER_NAME "s %" #MAX_PASSWORD_LENGTH "s %02s" INI_NEW_LINE, yid, name, ret[E_USER_PRELOAD_PASS]/*, Langs_GetCode(ret[E_USER_PRELOAD_LANG])*/);
 			fwrite(fIndex, line);
 			fclose(fIndex);
 			format(filename, sizeof (filename), USER_FILE_PATH "%0" #MAX_INDEX_LENGTH "d.INI", yid);
@@ -1311,7 +1307,7 @@ global Player_ForceGroup(playerid, string:other[])
 				INI:x = INI_Open(filename);
 			if (x == INI_NO_FILE)
 			{
-				Text_Send(playerid, $YSI_LOGIN_NOLOAD);
+				//Text_Send(playerid, $YSI_LOGIN_NOLOAD);
 			}
 			else
 			{
@@ -1321,9 +1317,9 @@ global Player_ForceGroup(playerid, string:other[])
 				INI_Close(x);
 			}
 			// Call in all scripts.
-			Langs_SetPlayerLanguage(playerid, ret[E_USER_PRELOAD_LANG]);
+			//Langs_SetPlayerLanguage(playerid, ret[E_USER_PRELOAD_LANG]);
 			broadcastfunc Player_DoLogin(playerid, yid);
-			Text_Send(playerid, $YSI_LOGIN_LOGIN);
+			//Text_Send(playerid, $YSI_LOGIN_LOGIN);
 			return 1;
 		}
 	}

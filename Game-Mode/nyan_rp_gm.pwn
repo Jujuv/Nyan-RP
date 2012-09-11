@@ -1,32 +1,8 @@
 /*
 Macros divers
 */
-#define MIN_PASSWORD_LENGHT 7
-#define MODE_NAME Nyan-RP M03
-
+#define MODE_NAME Nyan-RP M04
 #define SetPVarInt(%0,%1,++) SetPVarInt(%0,%1,GetPVarInt(%0,%1)+1)
-#define Player_LogOut(%0) Player_DoLogout(%0, Player_GetYID(%0))
-/*
-Inclusion de bibliotheques
-*/
-#include <a_samp>
-#include <nyanrp>
-
-/*
-Macros de couleurs (C_ pour Colors et CE_ pour ColorEmbeding)
-*/
-#define C_WHITE 0xFFFFFFFF
-#define C_BLACK 0x000000FF
-#define C_GREY 0x0000007F
-#define C_RED 0xFF0000C3
-#define C_BLUE 0x0000FFAA
-#define C_YELLOW 0xFFCE0092
-#define C_ORANGE 0xE67A00FF
-
-#define CE_PURPPLE "{8C3C63}"
-#define CE_WHITE "{FFFFFF}"
-#define CE_GREY "{666666}"
-#define CE_BLACK "{000000}"
 
 /*
 Enumerations divers
@@ -42,29 +18,10 @@ enum//Enumeration des IDs de dialogues
 		dLogin
 }
 
-enum//Enumeration des IDs de pays
-{
-		nAmerica,//North America (Amerique du Nord / USA)
-		mAmerica,//Middle America (Amerique centrale)
-		sAmerica,//South America (Amerique du Sud)
-		asia,//Asie
-		europe,//Europe
-		nAfrica,//North Africa (Afrique du Nord)
-		sAfrica//South Africa (Afrique du Sud)
-}
-
-enum E_PLAYERS
-{
-		age,
-		country,
-		level,
-		money
-}
-
 /*
-Tableaux globales & uvars
+Inclusion de bibliotheques
 */
-uvar pInfos[MAX_PLAYERS][E_PLAYERS];
+#include <nyanrp>
 
 /*
 Prototypes de fonctions publique
@@ -74,106 +31,7 @@ forward OnPlayerConnectAgain(playerid);
 forward OnPlayerLoginFail(playerid);
 forward OnPlayerRegister(playerid);
 forward OnPlayerLoginSucess(playerid);
-
 forward TenMinutesTimer();
-
-/*
-Création de fonctions
-*/
-stock strs(str1[], str2[], bool:ignorecase = true)//Copié de Dutils (par Dracoblue)
-{
-    if (strlen(str1) != strlen(str2)) return false;
-    if (!strcmp(str1, str2, ignorecase)) return true;
-    return false;
-}
-
-stock GivePlayerName(playerid)
-{
-		new pName[MAX_PLAYER_NAME+1];
-		GetPlayerName(playerid, pName, sizeof(pName));
-		return pName;
-}
-
-stock GetPVarStringEx(playerid, vName[])
-{
-	new string[500];
-	GetPVarString(playerid, vName, string, sizeof(string));
-	return string;
-}
-
-stock ProxDetector(playerid, targetid, Float:range)  
-{
-    if(GetPlayerVirtualWorld(playerid) != GetPlayerVirtualWorld(targetid) || GetPlayerInterior(playerid) != GetPlayerInterior(playerid))
-        return 0;
-
-    new Float:posX, Float:posY, Float:posZ;  
-    GetPlayerPos(playerid, posX, posY, posZ);  
-    return IsPlayerInRangeOfPoint(targetid, range, posX, posY, posZ); 
-}
-
-stock SendMessageToNearPlayers(playerid, message[], nameColor[], color1[], color2[], color3[])
-{
-	new output[250];//Chaine de carractére correspondant au message affiché au joueur
-	new bool:send = false;//Le message dois t-il être envoyé ?
-	
-	format(output, sizeof(output), "%s%s: ", nameColor, GivePlayerName(playerid));//On incoropore le nom du joueur (avec sa couleur)
-	
-	foreach(new targetid : Player)
-	{
-		if(ProxDetector(playerid, targetid, 2.0))
-			{
-				strcat(output, color1);//On incopore le code couleur correspondant au "range"
-				send = true;//Il est bien dans l-un des "ranges" désirés, alors on lui envoie
-			}
-		else if(ProxDetector(playerid, targetid, 4.0))
-			{
-				strcat(output, color2);
-				send = true;
-			}
-		else if(ProxDetector(playerid, targetid, 6.0))
-			{
-				strcat(output, color3);
-				send = true;
-			}
-			
-		if(send)//Si il est dans un des 3 "ranges"
-		{
-				strcat(output, message);//on incorpore le message
-				SendClientMessage(targetid, -1, output);//on le lui envoie
-		}
-		
-	}
-}
-
-stock AutoSavePlayersDatas()
-{
-	print("[WARNING] Sauvegarde automatique des comptes des joueurs connéctés en cours");
-	foreach(new playerid : Player)
-	{
-		if(!IsPlayerNPC(playerid))
-			SavePlayerDatas(playerid);
-	}
-}
-
-stock SavePlayerDatas(playerid)
-{
-	if(!Player_IsLoggedIn(playerid))
-		return 1;
-		
-	Player_LogOut(playerid);
-	Player_ForceLogin(playerid);
-	
-	return 0;
-		
-	
-}
-
-stock Player_Login(playerid)
-{
-	new message[60+MAX_PLAYER_NAME];
-	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GivePlayerName(playerid));
-	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", message, "Login", "Annuler");
-}
 
 /*
 Callbacks
@@ -447,32 +305,32 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 /*
 Callbacks ajoutées
 */
-public OnPlayerFirstConnect(playerid)
+public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la premiére fois
 {
 	new message[220+MAX_PLAYER_NAME];
 	format(message, sizeof(message), "Bonjour %s !\n Bienvenue sur Nyan-RP, un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GivePlayerName(playerid));
 	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
 }
 
-public OnPlayerConnectAgain(playerid)
+public OnPlayerConnectAgain(playerid)//Quand un joueur dèja inscris se connecte
 {
-	Player_Login(playerid);
+	LoginForm(playerid);
 }
 
-public OnPlayerLoginFail(playerid)
+public OnPlayerLoginFail(playerid)//Quand un joueur se trompe de mot de passe à la connexion
 {
 	SetPVarInt(playerid, "LoginFail", ++);
 	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Mot de passe incorrect !\nré-essayez", "Login", "Annuler");
 }
 
-public OnPlayerLoginSucess(playerid)
+public OnPlayerLoginSucess(playerid)//Quand le joueur s'est loggé avec succés
 {
 
 }
 
-public OnPlayerRegister(playerid)
+public OnPlayerRegister(playerid)//Quand le joueur termine son inscription
 {
-	Player_Login(playerid);
+	LoginForm(playerid);
 }
 
 public TenMinutesTimer()//Appelé toutes les 10 minutes

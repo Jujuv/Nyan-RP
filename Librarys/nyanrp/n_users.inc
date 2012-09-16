@@ -7,7 +7,13 @@
 #define Player_LogOut(%0) Player_DoLogout(%0, Player_GetYID(%0))
 #define MIN_PASSWORD_LENGHT 7
 
-enum//Enumeration des IDs de pays
+#define MODERATOR MODO
+#define ADMINISTRATOR ADMIN
+
+#define IsPlayerRegistered(%0) Player_IsRegistered(%0)
+
+
+enum //Enumeration des IDs de pays
 {
 		nAmerica,//North America (Amerique du Nord / USA)
 		mAmerica,//Middle America (Amerique centrale)
@@ -15,15 +21,25 @@ enum//Enumeration des IDs de pays
 		asia,//Asie
 		europe,//Europe
 		nAfrica,//North Africa (Afrique du Nord)
-		sAfrica//South Africa (Afrique du Sud)
+		sAfrica,//South Africa (Afrique du Sud)
 }
 
-enum E_PLAYERS//Enumeration des statistiques de joueur
+enum //Enumeration des rangs d'administration
+{
+		MEMBER,
+		HELPER,
+		MODERATOR,
+		ADMINISTRATOR,
+		OWNER
+}
+
+enum E_PLAYERS //Enumeration des statistiques de joueur
 {
 		age,
 		country,
 		level,
-		money
+		money,
+		aRank,	
 }
 
 uvar pInfos[MAX_PLAYERS][E_PLAYERS];//UVAR globale stockant les statistiques des joueurs

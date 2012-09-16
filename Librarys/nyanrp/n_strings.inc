@@ -5,6 +5,7 @@
 #endif
 
 #define IsStringEmpty(%0) IsStringNull(%0)
+#define strsame(%0) strs(%0)
 
 stock strs(str1[], str2[], bool:ignorecase = true)//Indique si 2 chaines de carractéres sont identiques (copié de dracoBlue)
 {

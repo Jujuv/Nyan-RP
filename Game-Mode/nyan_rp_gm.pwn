@@ -1,13 +1,13 @@
 /*
 Macros divers
 */
-#define MODE_NAME Nyan-RP M04
+#define MODE_NAME Nyan-RP M04B
 #define SetPVarInt(%0,%1,++) SetPVarInt(%0,%1,GetPVarInt(%0,%1)+1)
 
 /*
 Enumerations divers
 */
-enum//Enumeration des IDs de dialogues
+enum //Enumeration des IDs de dialogues
 {
 		dRegisterS1,//Message de premiére connexion
 		dRegisterS2,//Choix du mot de passe
@@ -104,15 +104,6 @@ public OnPlayerText(playerid, text[])
 	return 0;
 }
 
-public OnPlayerCommandText(playerid, cmdtext[])
-{
-	if (strcmp("/mycommand", cmdtext, true, 10) == 0)
-	{
-		// Do something here
-		return 1;
-	}
-	return 0;
-}
 
 public OnPlayerEnterVehicle(playerid, vehicleid, ispassenger)
 {
@@ -267,7 +258,7 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		{
 			if(YHash(inputtext) != GetPVarInt(playerid, "HashedPassword"))
 				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Vous avez entrer deux mots de passes différents.\nRéesayez. !", "Ok", "Annuler");
-			else//Idée honteusement copié de Wonderful-Life RP
+			else //Idée honteusement copié de Wonderful-Life RP
 			{
 				SetPVarString(playerid, "CleanPassword", inputtext);//Mot de passe non-hashé
 				return ShowPlayerDialog(playerid, dRegisterS4, DIALOG_STYLE_LIST, "Choix de l'age", "20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59\n60\n61\n62\n63\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80", "Ok", "Annuler");
@@ -307,6 +298,7 @@ Callbacks ajoutées
 */
 public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la premiére fois
 {
+	pInfos[playerid][aRank] = MEMBER;
 	new message[220+MAX_PLAYER_NAME];
 	format(message, sizeof(message), "Bonjour %s !\n Bienvenue sur Nyan-RP, un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GivePlayerName(playerid));
 	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
@@ -337,299 +329,3 @@ public TenMinutesTimer()//Appelé toutes les 10 minutes
 {
 	AutoSavePlayersDatas();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -16,3 +16,4 @@ English:
 
 
 Nyan-RP is a french open-source RP mode for SA:MP.
+You may not be interested by this project as you don't speak french.

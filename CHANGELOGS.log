@@ -29,4 +29,8 @@ Milestone 05A (1#M05A):
 	-Mise en place des couleurs (boite de dialogue)
 	-Amélioration de la mise en page
 	-Ajouts de couleurs
+
+Milestone 06A (1#M06A):
+	-Correction d'une erreur mineur au nivaeu des couleurs intégrés
+	-Création de la bibliotheque n_carparts (enumeration des différents éléments de tunning).
 	

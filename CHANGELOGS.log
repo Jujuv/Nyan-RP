@@ -1,24 +1,26 @@
-﻿Milestone 01A (M01):
+﻿---------------------Version 1--------------------------
+
+Milestone 01A (1#M01A):
 	-Version intial
 
-Milestone 01B (M01B):
+Milestone 01B (1#M01B):
 	-Divers corrections
 
-Milestone 02A (M02A):
+Milestone 02A (1#M02A):
 	-Supression de Y_Language / Y_Text (qui étais intégré à Y_Users)
 	-La fonction SendMessageToNearPlayers() utilise désormais les couleurs "embeded" (1 couleur pour le nom du joueur, 1 autre pour le message)
 	-Correction d'un minuscule oubli
 
-Milestone 02B (M02B):
+Milestone 02B (1#M02B):
 	-Corrections de bugs liés à foreach
 
-Milestone 03 (M03A):
+Milestone 03 (1#M03A):
 	-Systeme d'inscription & login continué
 	-Divers optimisations mineurs
 
-Milestone 04 (M04A):
+Milestone 04 (1#M04A):
 	-Programmation pseudo-modulaire
 
-Milestone 04B (M04B):
+Milestone 04B (1#M04B):
 	-Préparation en vue du systeme de vehicules
 	-Préparation en vue du systeme d'administration

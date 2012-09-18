@@ -1,15 +1,22 @@
-/*
-Macros divers
+/* Nyan-RP
+
+	18/09/12 | [Zer0]leo3412 | Revu de la pr√©sentation
+							   Mise en place des couleurs (boite de dialogue)
+							   Ajout de Couleurs (n_colors)
+							   
+	Mettre ICI la Dev. Log
+
 */
+
+/* ///////////////////////////// Macros Divers ///////////////////////////// */
 #define MODE_NAME Nyan-RP M04B
 #define SetPVarInt(%0,%1,++) SetPVarInt(%0,%1,GetPVarInt(%0,%1)+1)
 
-/*
-Enumerations divers
-*/
+/* ///////////////////////////// Enumerations Diverses ///////////////////////////// */
+
 enum //Enumeration des IDs de dialogues
 {
-		dRegisterS1,//Message de premiÈre connexion
+		dRegisterS1,//Message de premi√®re connexion
 		dRegisterS2,//Choix du mot de passe
 		dRegisterS3,//Confirmation du mot de passe
 		dRegisterS4,//Choix de l'age
@@ -18,14 +25,10 @@ enum //Enumeration des IDs de dialogues
 		dLogin
 }
 
-/*
-Inclusion de bibliotheques
-*/
+/* ///////////////////////////// Inclusion des biblioth√®ques ///////////////////////////// */
 #include <nyanrp>
 
-/*
-Prototypes de fonctions publique
-*/
+/* ///////////////////////////// Prototypes de fonctions publiques ///////////////////////////// */
 forward OnPlayerFirstConnect(playerid);
 forward OnPlayerConnectAgain(playerid);
 forward OnPlayerLoginFail(playerid);
@@ -33,14 +36,12 @@ forward OnPlayerRegister(playerid);
 forward OnPlayerLoginSucess(playerid);
 forward TenMinutesTimer();
 
-/*
-Callbacks
-*/
+/* ///////////////////////////// Callback ///////////////////////////// */
 
 main()
 {
 	print("\n----------------------------------");
-	print("NYAN-RP Started ...");
+	print(" Nyan-RP");
 	print("----------------------------------\n");
 }
 
@@ -49,7 +50,7 @@ public OnGameModeInit()
 	SetGameModeText("Nyan-RP");
 	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0);
 	SetTimer("TenMinutestimer", 10*1000*60, true);
-	
+
 	return 1;
 }
 
@@ -237,50 +238,50 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 		if(!Player_IsLoggedIn(playerid))
 			return Kick(playerid);
 	}
-	
+
 	switch(dialogid)
 	{
 		case dRegisterS1:
-		{	
-			return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Veuillez choisir un mot de passe de connexion.\nAttention de ne pas le perdre !\n\nPS:Votre mot de passe doit contenir au moins 6 carractÈres", "Ok", "Annuler");
+		{
+			return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, ""CE_GREEN"Choix du mot de passe", ""CE_WHITE"Veuillez choisir un "CE_PURPLE"mot de passe"CE_WHITE" de connexion.\nAttention de ne pas le perdre !\n\nPS:Votre mot de passe doit contenir au moins 6 carract√®res", "Ok", "Annuler");
 		}
 		case dRegisterS2:
 		{
 			if(strlen(inputtext) < MIN_PASSWORD_LENGHT)
-				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Erreur. Le mot de passe choisie est trop court", "Ok", "Annuler");
+				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, ""CE_GREEN"Choix du mot de passe", ""CE_RED"Erreur."CE_WHITE" Le mot de passe choisis est trop court", "Ok", "Annuler");
 			else
 			{
 				SetPVarInt(playerid, "HashedPassword", YHash(inputtext));
-				return ShowPlayerDialog(playerid, dRegisterS3, DIALOG_STYLE_PASSWORD, "Verification du mot de passe", "Afin d'Èviter toute erreur lors du choix de votre mot de passe, nous vous demandons de bien vouloir le rentrer de nouveau.", "Ok", "Annuler");
+				return ShowPlayerDialog(playerid, dRegisterS3, DIALOG_STYLE_PASSWORD, ""CE_GREEN"Verification du mot de passe", ""CE_WHITE"Afin d'√©viter toute erreur lors du choix de votre mot de passe, nous vous demandons de bien vouloir le rentrer de nouveau.", "Ok", "Annuler");
 			}
 		}
 		case dRegisterS3:
 		{
 			if(YHash(inputtext) != GetPVarInt(playerid, "HashedPassword"))
-				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, "Choix du mot de passe", "Vous avez entrer deux mots de passes diffÈrents.\nRÈesayez. !", "Ok", "Annuler");
-			else //IdÈe honteusement copiÈ de Wonderful-Life RP
+				return ShowPlayerDialog(playerid, dRegisterS2, DIALOG_STYLE_PASSWORD, ""CE_GREEN"Choix du mot de passe", ""CE_WHITE"Vous avez entr√© deux mots de passes diff√©rents.\nR√©esayez. !", "Ok", "Annuler");
+			else //Id√©e honteusement copi√©e de Wonderful-Life RP
 			{
-				SetPVarString(playerid, "CleanPassword", inputtext);//Mot de passe non-hashÈ
-				return ShowPlayerDialog(playerid, dRegisterS4, DIALOG_STYLE_LIST, "Choix de l'age", "20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59\n60\n61\n62\n63\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80", "Ok", "Annuler");
+				SetPVarString(playerid, "CleanPassword", inputtext);//Mot de passe non-hash?
+				return ShowPlayerDialog(playerid, dRegisterS4, DIALOG_STYLE_LIST, ""CE_GREEN"Choix de l'age", ""CE_WHITE"20\n21\n22\n23\n24\n25\n26\n27\n28\n29\n30\n31\n32\n33\n34\n35\n36\n37\n38\n39\n40\n41\n42\n43\n44\n45\n46\n47\n48\n49\n50\n51\n52\n53\n54\n55\n56\n57\n58\n59\n60\n61\n62\n63\n64\n65\n66\n67\n68\n69\n70\n71\n72\n73\n74\n75\n76\n77\n78\n79\n80", "Ok", "Annuler");
 			}
 		}
 		case dRegisterS4:
 		{
 			pInfos[playerid][age] = listitem+20;
-			return ShowPlayerDialog(playerid, dRegisterS5, DIALOG_STYLE_LIST, "Choix de l'origine", "Amerique du nord\nAmerique centrale\nAmerique du Sud\nAsie\nEurope\nAffrique du Nord\nAffrique du Sud", "Ok", "Annuler");
+			return ShowPlayerDialog(playerid, dRegisterS5, DIALOG_STYLE_LIST, ""CE_GREEN"Choix de l'origine", "Amerique du nord\nAmerique centrale\nAmerique du Sud\nAsie\nEurope\nAffrique du Nord\nAffrique du Sud", "Ok", "Annuler");
 		}
 		case dRegisterS5:
 		{
 			pInfos[playerid][country] = listitem;
-			ShowPlayerDialog(playerid, dRegisterS6, DIALOG_STYLE_MSGBOX, "Inscription tÈrminÈe !", "Votre inscription est tÈrminÈe !\nVous pouvez dÈsormais jouer.", "Ok", "Annuler");
+			ShowPlayerDialog(playerid, dRegisterS6, DIALOG_STYLE_MSGBOX, "Inscription termin√©e !", "Votre inscription est termin√©e !\nVous pouvez d√©sormais jouer.", "Ok", "Annuler");
 			Player_TryRegister(playerid, GetPVarStringEx(playerid, "CleanPassword"));
 			OnPlayerRegister(playerid);
-			return SetPVarString(playerid, "CleanPassword", "None");//RÈduis les risques de vol du mot de passe via des "injections de script"
+			return SetPVarString(playerid, "CleanPassword", "None");//R√©duis les risques de vol du mot de passe via des "injections de script"
 		}
 		case dLogin:
 		{
 			Player_TryLogin(playerid, inputtext);
-			
+
 			if(!Player_IsLoggedIn(playerid))
 				OnPlayerLoginFail(playerid);
 		}
@@ -293,29 +294,28 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 	return 1;
 }
 
-/*
-Callbacks ajoutÈes
-*/
-public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la premiÈre fois
+/* ///////////////////////////// Callback ajout√©es ///////////////////////////// */
+
+public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la premi√®re fois
 {
 	pInfos[playerid][aRank] = MEMBER;
-	new message[220+MAX_PLAYER_NAME];
-	format(message, sizeof(message), "Bonjour %s !\n Bienvenue sur Nyan-RP, un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GivePlayerName(playerid));
-	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
+	new message[220+MAX_PLAYER_NAME]; // Il serait mieux d'utiliser une chaine de caract√®re globale
+	format(message, sizeof(message), ""CE_WHITE"Bonjour %s !\n Bienvenue sur "CE_PURPLE"Nyan-RP"CE_WHITE", un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GivePlayerName(playerid));
+	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, ""CE_GREEN"Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
 }
 
-public OnPlayerConnectAgain(playerid)//Quand un joueur dËja inscris se connecte
+public OnPlayerConnectAgain(playerid)//Quand un joueur d√©ja inscris se connecte
 {
 	LoginForm(playerid);
 }
 
-public OnPlayerLoginFail(playerid)//Quand un joueur se trompe de mot de passe ‡ la connexion
+public OnPlayerLoginFail(playerid)//Quand un joueur se trompe de mot de passe ? la connexion
 {
 	SetPVarInt(playerid, "LoginFail", ++);
-	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Mot de passe incorrect !\nrÈ-essayez", "Login", "Annuler");
+	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Mot de passe incorrect !\nR√©essayez", "Login", "Annuler");
 }
 
-public OnPlayerLoginSucess(playerid)//Quand le joueur s'est loggÈ avec succÈs
+public OnPlayerLoginSucess(playerid)//Quand le joueur s'est logg√© avec succ√®s
 {
 
 }
@@ -325,7 +325,8 @@ public OnPlayerRegister(playerid)//Quand le joueur termine son inscription
 	LoginForm(playerid);
 }
 
-public TenMinutesTimer()//AppelÈ toutes les 10 minutes
+public TenMinutesTimer()//Appel√© toutes les 10 minutes
 {
 	AutoSavePlayersDatas();
 }
+/* Super je me suis tap√© tous les accents en voulant passer le tout sur PAWNO =D */

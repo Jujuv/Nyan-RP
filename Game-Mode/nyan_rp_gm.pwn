@@ -1,5 +1,5 @@
 /* ///////////////////////////// Macros Divers ///////////////////////////// */
-#define MODE_NAME Nyan-RP M04B
+#define MODE_NAME Nyan-RP
 #define SetPVarInt(%0,%1,++) SetPVarInt(%0,%1,GetPVarInt(%0,%1)+1)
 
 /* ///////////////////////////// Enumerations Diverses ///////////////////////////// */
@@ -24,6 +24,9 @@ forward OnPlayerLoginFail(playerid);
 forward OnPlayerRegister(playerid);
 forward OnPlayerLoginSucess(playerid);
 forward TenMinutesTimer();
+forward OnPlayerCrash(playerid);
+forward OnPlayerQuit(playerid);
+forward OnPlayerKicked(playerid);
 
 /* ///////////////////////////// Callback ///////////////////////////// */
 
@@ -65,6 +68,15 @@ public OnPlayerConnect(playerid)
 
 public OnPlayerDisconnect(playerid, reason)
 {
+	switch(reason)
+	{
+		case 0:
+			OnPlayerCrash(playerid);
+		case 1:
+			OnPlayerQuit(playerid);
+		case 2:
+			OnPlayerKicked(playerid);
+	}
 	return 1;
 }
 
@@ -315,6 +327,22 @@ public OnPlayerRegister(playerid)//Quand le joueur termine son inscription
 {
 	LoginForm(playerid);
 }
+
+public OnPlayerCrash(playerid)
+{
+
+}
+
+public OnPlayerQuit(playerid)
+{
+
+}
+
+public OnPlayerKicked(playerid)// /!\Aussi appelé quand le jour est banni
+{
+
+}
+
 
 public TenMinutesTimer()//Appelé toutes les 10 minutes
 {

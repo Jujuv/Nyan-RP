@@ -33,4 +33,9 @@ Milestone 05A (1#M05A):
 Milestone 06A (1#M06A):
 	-Correction d'une erreur mineur au nivaeu des couleurs intégrés
 	-Création de la bibliotheque n_carparts (enumeration des différents éléments de tunning).
+
+Milestone 06B (1#M06B):
+	-Correction d'une erreur au nivaeu des couleurs intégrés (la précédente correction etais mal faite)
+	-Nouvelles callbacks (OnPlayerquit(), OnPlayerKicked() et OnPlayerCrash() )
+
 	

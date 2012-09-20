@@ -48,7 +48,3 @@ stock IsStringNull(string[])//Indique si une chaine de carractére est vide
 
 
 
-
-
-
-

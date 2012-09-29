@@ -16,4 +16,9 @@ English:
 
 
 Nyan-RP is a french open-source RP mode for SA:MP.
-You may not be interested by this project as you don't speak french.
+
+NyanRP is made from sratch but many librarys (usualy called "includes") are used to help developers.
+
+At this time (27 september 2012) NyanRP only uses Y_Users (implying Y_Ini & Y_Uvars).
+
+NyanRP means "Yet another Role-Play" (YAN-RP) but i added a "N" to that name to make a word-joke with "Nyan" ("meow" in japenesse).

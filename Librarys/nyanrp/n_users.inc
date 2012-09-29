@@ -11,6 +11,7 @@
 #define ADMINISTRATOR ADMIN
 
 #define IsPlayerRegistered(%0) Player_IsRegistered(%0)
+#define GetPlayerName(%0) pInfos[%0][pName]
 
 
 enum //Enumeration des IDs de pays
@@ -35,15 +36,22 @@ enum //Enumeration des rangs d'administration
 
 enum E_PLAYERS //Enumeration des statistiques de joueur
 {
+		pName[MAX_PLAYER_NAME+1],
 		age,
 		country,
 		level,
 		money,
-		aRank,	
+		aRank,
+		bool:IsBanned
 }
 
 uvar pInfos[MAX_PLAYERS][E_PLAYERS];//UVAR globale stockant les statistiques des joueurs
 
+
+stock RefreshPlayerName(playerid)
+{
+
+}
 
 stock SavePlayerDatas(playerid)//Sauvegarde les stats joueurs
 {
@@ -69,6 +77,6 @@ stock AutoSavePlayersDatas()//Sauvegarde les stats de tout les joueurs
 stock LoginForm(playerid)//Affiche le formulaire de connection au joueur donné
 {
 	new message[60+MAX_PLAYER_NAME];
-	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GivePlayerName(playerid));
+	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GetPlayerName(playerid));
 	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", message, "Login", "Annuler");
 }

@@ -9,7 +9,7 @@ stock SendMessageToNearPlayers(playerid, message[], nameColor[], color1[], color
 	new output[250];//Chaine de carractére correspondant au message affiché au joueur
 	new bool:send = false;//Le message dois t-il être envoyé ?
 	
-	format(output, sizeof(output), "%s%s: ", nameColor, GivePlayerName(playerid));//On incoropore le nom du joueur (avec sa couleur)
+	format(output, sizeof(output), "%s%s: ", nameColor, GetPlayerName(playerid));//On incoropore le nom du joueur (avec sa couleur)
 	
 	foreach(new targetid : Player)
 	{

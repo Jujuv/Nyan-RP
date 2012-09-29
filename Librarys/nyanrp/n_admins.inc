@@ -4,7 +4,10 @@
 	#endinput
 #endif
 
-/*
-Il n'y a rien ici (pour le moment).
+#define Ban(%0) NYAN_Ban(%0)
+#define BanEx(%0, %1) NYAN_Ban(%0, %1)
 
-*/
+stock NYAN_Ban(userID, adminID, reason[] = "raison non-spécifié")
+{
+	
+} 

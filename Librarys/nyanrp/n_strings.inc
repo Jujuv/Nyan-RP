@@ -14,13 +14,6 @@ stock strs(str1[], str2[], bool:ignorecase = true)//Indique si 2 chaines de carr
     return false;
 }
 
-stock GivePlayerName(playerid)//Retourne le nom d'un joueur
-{
-		new pName[MAX_PLAYER_NAME+1];
-		GetPlayerName(playerid, pName, sizeof(pName));
-		return pName;
-}
-
 stock GetPVarStringEx(playerid, vName[])//Retourne la valeur d'une PVAR de type chaine de carractéres 
 {
 	new string[500];

@@ -48,9 +48,16 @@ enum E_PLAYERS //Enumeration des statistiques de joueur
 uvar pInfos[MAX_PLAYERS][E_PLAYERS];//UVAR globale stockant les statistiques des joueurs
 
 
-stock RefreshPlayerName(playerid)
+stock RefreshPlayerName(playerid, newName[])
 {
-
+	if(!Player_IsLoggedIn(playerid))
+		return 1;
+		
+	strins(pInfos[playerid][pName], newName, 0);
+	SetPlayerName(playerid, newName);
+	SavePlayerDatas(playerid);
+	
+	return 0;
 }
 
 stock SavePlayerDatas(playerid)//Sauvegarde les stats joueurs

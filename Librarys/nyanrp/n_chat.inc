@@ -33,6 +33,7 @@ stock SendMessageToNearPlayers(playerid, message[], nameColor[], color1[], color
 		{
 				strcat(output, message);//on incorpore le message
 				SendClientMessage(targetid, -1, output);//on le lui envoie
+				send = false;
 		}
 		
 	}

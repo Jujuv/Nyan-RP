@@ -42,23 +42,13 @@ enum E_PLAYERS //Enumeration des statistiques de joueur
 		level,
 		money,
 		aRank,
-		bool:IsBanned
+		bool:IsBanned,
+		bool:IsInVehicle
 }
 
 uvar pInfos[MAX_PLAYERS][E_PLAYERS];//UVAR globale stockant les statistiques des joueurs
 
 
-stock RefreshPlayerName(playerid, newName[])
-{
-	if(!Player_IsLoggedIn(playerid))
-		return 1;
-		
-	strins(pInfos[playerid][pName], newName, 0);
-	SetPlayerName(playerid, newName);
-	SavePlayerDatas(playerid);
-	
-	return 0;
-}
 
 stock SavePlayerDatas(playerid)//Sauvegarde les stats joueurs
 {
@@ -83,7 +73,9 @@ stock AutoSavePlayersDatas()//Sauvegarde les stats de tout les joueurs
 
 stock LoginForm(playerid)//Affiche le formulaire de connection au joueur donné
 {
+	new const Local_dLogin = CallRemoteFunction("SendLoginDialogID", "");
+	
 	new message[60+MAX_PLAYER_NAME];
 	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GetPlayerName(playerid));
-	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", message, "Login", "Annuler");
+	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, Local_dLogin, "Login", message, "Login", "Annuler");
 }

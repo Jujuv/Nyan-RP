@@ -45,3 +45,8 @@ Milestone 08A (1#M08A):
 	-Correction d'une erreur de logique dans la fonction SendMessageToNearplayers()
 	-La bibliotheque n_carparts a été fondamentalement re-faite
 	-La fonction RefreshPlayerName a été crée
+
+Milestone 09A (1#M09A):
+	-Utilisation de FDLG pour les dialogues
+	-Debut du syteme d'enregistrement de véhicules
+	-2/3 petites amééliorations/corrections minimes

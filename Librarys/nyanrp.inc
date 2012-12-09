@@ -36,5 +36,6 @@ Nyan-RP
 #include <nyanrp\n_chat>
 #include <nyanrp\n_admins>
 #include <nyanrp\n_vehicles>
+#include <nyanrp\n_cmds>
 
 

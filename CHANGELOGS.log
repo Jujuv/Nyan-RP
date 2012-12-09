@@ -49,4 +49,11 @@ Milestone 08A (1#M08A):
 Milestone 09A (1#M09A):
 	-Utilisation de FDLG pour les dialogues
 	-Debut du syteme d'enregistrement de véhicules
-	-2/3 petites amééliorations/corrections minimes
+	-2/3 petites améliorations/corrections minimes
+
+Milestone 09B (1#M09B)
+	-Finalisation de la fonction INTERNAL_RegisterVehicle() dan la bibliotheque n_vehicles
+	-Création de la fonction Regsiter_Vehicle (utilisation de la programmation modulaire)
+	-Création de la commande [/amenu]
+	-Créations de divers dialogues nécéssaires aux fonctionalités précédamant cités
+

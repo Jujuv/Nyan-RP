@@ -1,7 +1,7 @@
 /* ///////////////////////////// Inclusion des bibliotheques ///////////////////////////// */
 #include <nyanrp>
 
-/* ///////////////////////////// Prototypes de fonctions publiques ///////////////////////////// */
+/* ///////////////////////////// Forwarding Public Functions ///////////////////////////// */
 forward OnPlayerFirstConnect(playerid);
 forward OnPlayerConnectAgain(playerid);
 forward OnPlayerLoginFail(playerid);
@@ -85,11 +85,11 @@ public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la preme
 {
 	pInfos[playerid][aRank] = MEMBER;
 	new message[220+MAX_PLAYER_NAME];
-	format(message, sizeof(message), "CE_WHITE Bonjour %s !\n Bienvenue sur CE_PURPLE Nyan-RP CE_WHITE, un serveur RP qui se veux simple et amusant !\n Avant de pouvoir jouer, tu dois effectuer une rapide inscription.\nPas de panique, c'est simple et rapide !", GetPlayerName(playerid));
-	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "CE_GREEN Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
+	format(message, sizeof(message), "CE_WHITE Hello %s !\n Welcome to CE_PURPLE Nyan-RP CE_WHITE, a roleplay server that is simple and fun !\n Before you start playing, you must register,\ndo not panic, its quite easy and fast", GetPlayerName(playerid));
+	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "CE_GREEN Welcome to Nyan-RP !", message, "Continue", "Quit");
 }
 
-public OnPlayerConnectAgain(playerid)//Quand un joueur dea inscris se connecte
+public OnPlayerConnectAgain(playerid)// When a player connects, shows register/login
 {
 	LoginForm(playerid);
 }
@@ -97,15 +97,15 @@ public OnPlayerConnectAgain(playerid)//Quand un joueur dea inscris se connecte
 public OnPlayerLoginFail(playerid)//Quand un joueur se trompe de mot de passe ? la connexion
 {
 	SetPVarInt(playerid, "LoginFail", ++);
-	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Mot de passe incorrect !\nReessayez", "Login", "Annuler");
+	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Incorrect Password !\nTry Again", "Login", "Annuler");
 }
 
-public OnPlayerLoginSucess(playerid)//Quand le joueur s'est logge avec succes
+public OnPlayerLoginSucess(playerid)//When the player has successfully logs in.
 {
 
 }
 
-public OnPlayerRegister(playerid)//Quand le joueur termine son inscription
+public OnPlayerRegister(playerid)//When a player passes the register dialog
 {
 	LoginForm(playerid);
 }
@@ -120,12 +120,12 @@ public OnPlayerQuit(playerid)
 
 }
 
-public OnPlayerKicked(playerid)// /!\Aussi appele quand le jour est banni
+public OnPlayerKicked(playerid)// /!\Also called when a player is banned
 {
 
 }
 
-public TenMinutesTimer()//Appele toutes les 10 minutes
+public TenMinutesTimer()//Call every 10 minutes
 {
 	AutoSavePlayersDatas();
 }

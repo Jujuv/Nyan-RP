@@ -1,4 +1,4 @@
-/* ///////////////////////////// Inclusion des bibliotheques ///////////////////////////// */
+/* ///////////////////////////// Includes ///////////////////////////// */
 #include <nyanrp>
 
 /* ///////////////////////////// Forwarding Public Functions ///////////////////////////// */
@@ -81,7 +81,7 @@ public OnPlayerClickPlayer(playerid, clickedplayerid, source)
 
 /* ///////////////////////////// Callbacks ajoutees ///////////////////////////// */
 
-public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la premere fois
+public OnPlayerFirstConnect(playerid)// When a player connects to the server for the first time
 {
 	pInfos[playerid][aRank] = MEMBER;
 	new message[220+MAX_PLAYER_NAME];
@@ -94,7 +94,7 @@ public OnPlayerConnectAgain(playerid)// When a player connects, shows register/l
 	LoginForm(playerid);
 }
 
-public OnPlayerLoginFail(playerid)//Quand un joueur se trompe de mot de passe ? la connexion
+public OnPlayerLoginFail(playerid)// When a player has a incorrect password
 {
 	SetPVarInt(playerid, "LoginFail", ++);
 	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", "Incorrect Password !\nTry Again", "Login", "Annuler");
@@ -125,7 +125,7 @@ public OnPlayerKicked(playerid)// /!\Also called when a player is banned
 
 }
 
-public TenMinutesTimer()//Call every 10 minutes
+public TenMinutesTimer()//Calls every 10 minutes
 {
 	AutoSavePlayersDatas();
 }

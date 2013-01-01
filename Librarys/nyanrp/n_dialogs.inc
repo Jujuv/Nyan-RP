@@ -11,11 +11,7 @@ enum //Enumeration des IDs de dialogues
 		dRegisterS4,//Choix de l'age
 		dRegisterS5,//Choix de l'origine
 		dRegisterS6,//Message de fin d'inscription
-		dLogin,//Menu de connexion
-		dAMenu,//Menu d'adiministration
-		dAVehicles,//Menu de gestion des vehicules (administration)
-		dRegisterVehicle,//Menu de choix d'ID pour l'enregistrement de véhicule
-		
+		dLogin
 }
 
 DIALOG:dRegisterS1(playerid,response,listitem,inputtext[])
@@ -79,24 +75,4 @@ forward SendLoginDialogID();
 public SendLoginDialogID()
 {
 	return dLogin;
-}
-
-DIALOG:dAMenu(playerid, response, listitem, inputtext[])
-{
-	if(!response)
-		return 1;
-	
-	switch(listitem)
-		{
-			case 0:
-				{
-					AMenu_Vehicles(playerid);
-				}
-			
-			default:
-				{
-					printf("[WARNING] - La fonction DIALOG:dAMenu() a reçu des données invalides - Informations: La variable listitem vaux %i ce qui n'est pas la valeur attendue", listitem);
-				}
-		}
-	return 0;
 }

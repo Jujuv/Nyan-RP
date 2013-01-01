@@ -12,7 +12,7 @@
 
 #define IsPlayerRegistered(%0) Player_IsRegistered(%0)
 #define GetPlayerName(%0) pInfos[%0][pName]
-
+#define IsPlayerAdmin(%0) nIsPlayerAdmin(%0)
 
 enum //Enumeration des IDs de pays
 {
@@ -78,4 +78,14 @@ stock LoginForm(playerid)//Affiche le formulaire de connection au joueur donné
 	new message[60+MAX_PLAYER_NAME];
 	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GetPlayerName(playerid));
 	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, Local_dLogin, "Login", message, "Login", "Annuler");
+}
+
+stock nIsPlayerAdmin(playerid)
+{
+	if(!IsPlayerConnected(playerid))
+		return false;
+	
+	if(pInfos[playerid][aRank] >= MODERATOR)
+		return true;
+	return false;
 }

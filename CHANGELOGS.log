@@ -12,7 +12,7 @@ Milestone 02A (1#M02A):
 	-Correction d'un minuscule oubli
 
 Milestone 02B (1#M02B):
-	-Corrections de bugs liés à foreach
+	-Corrections de bugs liés à Foreach
 
 Milestone 03 (1#M03A):
 	-Systeme d'inscription & login continué
@@ -56,3 +56,4 @@ Milestone 09B (1#M09B)
 	-Création de la fonction Regsiter_Vehicle (utilisation de la programmation modulaire)
 	-Création de la commande [/amenu]
 	-Créations de divers dialogues nécéssaires aux fonctionalités précédamant cités
+	-Supression de la fonction RefreshPlayerName()

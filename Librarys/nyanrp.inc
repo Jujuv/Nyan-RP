@@ -8,7 +8,6 @@
 Tweaks
 */
 #define MODE_NAME Nyan-RP //Macro necessaire à l utilisation de YSI
-#define SetPVarInt(%0,%1,++) SetPVarInt(%0,%1,GetPVarInt(%0,%1)+1) //Permet une incrémentation simple des PVars
 #define FDLG_USE_YSI_HOOK //Configure FDLG pour utiliser la méthode "Y Hook" de YSI
 
 /*
@@ -18,16 +17,17 @@ YSI
 #include <YSI\y_users>
 #include <YSI\y_uvar>
 #include <YSI\y_commands>
-#include <djson>
 
 /*
 Autres bibliotheques
 */
-#include <fdialog>//Inclusion de(FDLG)
+#include <fdialog>//Inclusion de FDLG
+#include <djson>
 
 /*
 Nyan-RP
 */
+#include <nyanrp\n_tweaks>
 #include <nyanrp\n_colors>
 #include <nyanrp\n_users>
 #include <nyanrp\n_dialogs>

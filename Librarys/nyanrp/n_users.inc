@@ -7,12 +7,8 @@
 #define Player_LogOut(%0) Player_DoLogout(%0, Player_GetYID(%0))
 #define MIN_PASSWORD_LENGHT 7
 
-#define MODERATOR MODO
-#define ADMINISTRATOR ADMIN
-
 #define IsPlayerRegistered(%0) Player_IsRegistered(%0)
-#define GetPlayerName(%0) pInfos[%0][pName]
-#define IsPlayerAdmin(%0) nIsPlayerAdmin(%0)
+#define IsPlayerAdmin(%0) NYAN_IsPlayerAdmin(%0)
 
 enum //Enumeration des IDs de pays
 {
@@ -29,14 +25,13 @@ enum //Enumeration des rangs d'administration
 {
 		MEMBER,
 		HELPER,
-		MODERATOR,
-		ADMINISTRATOR,
+		MODO,
+		ADMIN,
 		OWNER
 }
 
 enum E_PLAYERS //Enumeration des statistiques de joueur
 {
-		pName[MAX_PLAYER_NAME+1],
 		age,
 		country,
 		level,
@@ -47,8 +42,6 @@ enum E_PLAYERS //Enumeration des statistiques de joueur
 }
 
 uvar pInfos[MAX_PLAYERS][E_PLAYERS];//UVAR globale stockant les statistiques des joueurs
-
-
 
 stock SavePlayerDatas(playerid)//Sauvegarde les stats joueurs
 {
@@ -73,19 +66,17 @@ stock AutoSavePlayersDatas()//Sauvegarde les stats de tout les joueurs
 
 stock LoginForm(playerid)//Affiche le formulaire de connection au joueur donné
 {
-	new const Local_dLogin = CallRemoteFunction("SendLoginDialogID", "");
-	
 	new message[60+MAX_PLAYER_NAME];
 	format(message, sizeof(message), "Bonjour %s,\nEntre ton mot de passe pour te connecter", GetPlayerName(playerid));
-	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, Local_dLogin, "Login", message, "Login", "Annuler");
+	ShowPlayerDialog(playerid, DIALOG_STYLE_PASSWORD, dLogin, "Login", message, "Login", "Annuler");
 }
 
-stock nIsPlayerAdmin(playerid)
+stock NYAN_IsPlayerAdmin(playerid)
 {
 	if(!IsPlayerConnected(playerid))
 		return false;
 	
-	if(pInfos[playerid][aRank] >= MODERATOR)
+	if(pInfos[playerid][aRank] >= MODO)
 		return true;
 	return false;
 }

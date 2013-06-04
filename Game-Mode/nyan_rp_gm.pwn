@@ -7,10 +7,11 @@ forward OnPlayerConnectAgain(playerid);
 forward OnPlayerLoginFail(playerid);
 forward OnPlayerRegister(playerid);
 forward OnPlayerLoginSucess(playerid);
-forward TenMinutesTimer();
 forward OnPlayerCrash(playerid);
 forward OnPlayerQuit(playerid);
 forward OnPlayerKicked(playerid);
+
+forward TenMinutesTimer();
 
 /* ///////////////////////////// Callbacks ///////////////////////////// */
 main()
@@ -26,8 +27,7 @@ public OnGameModeInit()
 
 	SetGameModeText("Nyan-RP");
 	AddPlayerClass(0, 1958.3783, 1343.1572, 15.3746, 269.1425, 0, 0, 0, 0, 0, 0);
-	SetTimer("TenMinutestimer", 10*1000*60, true);
-	
+	SetTimer("TenMinutesTimer", 600000, true);//10*1000*60=600000
 
 	return 1;
 }
@@ -89,7 +89,7 @@ public OnPlayerFirstConnect(playerid)//Quand le joueur se connecte pour la preme
 	ShowPlayerDialog(playerid, DIALOG_STYLE_MSGBOX, dRegisterS1, "CE_GREEN Bienvenue sur Nyan-RP !", message, "Continuer", "Quitter");
 }
 
-public OnPlayerConnectAgain(playerid)//Quand un joueur dea inscris se connecte
+public OnPlayerConnectAgain(playerid)//Quand un joueur deja inscris se connecte
 {
 	LoginForm(playerid);
 }
@@ -102,7 +102,10 @@ public OnPlayerLoginFail(playerid)//Quand un joueur se trompe de mot de passe à 
 
 public OnPlayerLoginSucess(playerid)//Quand le joueur s'est logge avec succes
 {
-
+	if(pInfos[playerid][IsBanned])
+	{
+		KickEx(playerid, "Ce compte a été bannis de notre serveur");
+	}
 }
 
 public OnPlayerRegister(playerid)//Quand le joueur termine son inscription
@@ -129,9 +132,3 @@ public TenMinutesTimer()//Appele toutes les 10 minutes
 {
 	AutoSavePlayersDatas();
 }
-
-/*
-
-Fixing isuue with Github.
-Please ignore this comment
-*/

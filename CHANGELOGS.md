@@ -15,11 +15,11 @@ Version 1
 ### Milestone 02B (1#M02B)
 	*Corrections de bugs liés à Foreach
 
-### Milestone 03 (1#M03A)
+### Milestone 03A (1#M03A)
 	*Edition des systeme d'inscription & login
 	*Optimisations divers
 
-### Milestone 04 (1#M04A)
+### Milestone 04A (1#M04A)
 	*Edition majeur de l'organisation (adoption de progrmmation pseudo-modulaire)
 
 ### Milestone 04B (1#M04B)

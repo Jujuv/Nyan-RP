@@ -197,9 +197,8 @@ Notes:
 
 stock Player_Reload(playerid)
 {
-	new
-		name[MAX_PLAYER_NAME];
-	GetPlayerName(playerid, name, sizeof (name));
+	new name[MAX_PLAYER_NAME+1];
+	name = GetPlayerName(playerid);
 	Player_Preload(name, YSI_g_sPreloadData[playerid]);
 }
 
@@ -498,9 +497,8 @@ hook OnPlayerConnect(playerid)
 		P:5("Users_OnPlayerConnect: Exists %d", yid);
 		if (yid == -1)
 		{
-			new
-				name[MAX_PLAYER_NAME];
-			GetPlayerName(playerid, name, sizeof (name));
+			new name[MAX_PLAYER_NAME+1];
+			name = GetPlayerName(playerid);
 			Player_Preload(name, YSI_g_sPreloadData[playerid]);
 		}
 		else
@@ -513,9 +511,8 @@ hook OnPlayerConnect(playerid)
 	else
 	{
 		P:5("Users_OnPlayerConnect: Doesn't exist");
-		new
-			name[MAX_PLAYER_NAME];
-		GetPlayerName(playerid, name, sizeof (name));
+		new name[MAX_PLAYER_NAME+1];
+		name = GetPlayerName(playerid);
 		Player_Preload(name, YSI_g_sPreloadData[playerid]);
 		P:5("Users_OnPlayerConnect: Done Preload");
 		// Can do checking in here to see if they just rejoined.
@@ -1037,9 +1034,8 @@ global Player_TryRegister(playerid, string:password[])
 			}
 		}
 	}
-	new
-		name[MAX_PLAYER_NAME + 1];
-	GetPlayerName(playerid, name, sizeof (name));
+	new name[MAX_PLAYER_NAME+1];
+	name = GetPlayerName(playerid);
 	//format(name, sizeof (name), "%" #MAX_PLAYER_NAME "s", name);
 	new
 		filename[64] = USER_FILE_PATH "ind_X.YSI",
@@ -1173,9 +1169,8 @@ global Player_TryGroup(playerid, string:other[], string:password[])
 			// Match the password.
 			if (!strcmp(ret[E_USER_PRELOAD_PASS], hash, false, MAX_PASSWORD_LENGTH) && ret[E_USER_PRELOAD_PASS][0])
 			{
-				new
-					name[MAX_PLAYER_NAME + 1];
-				GetPlayerName(playerid, name, sizeof (name));
+				new name[MAX_PLAYER_NAME+1];
+				name = GetPlayerName(playerid);
 				new
 					filename[64] = USER_FILE_PATH "ind_X.YSI";
 				Player_GetIndexFile(filename, name[0]);
@@ -1281,9 +1276,8 @@ global Player_ForceGroup(playerid, string:other[])
 		}
 		default:
 		{
-			new
-				name[MAX_PLAYER_NAME + 1];
-			GetPlayerName(playerid, name, sizeof (name));
+			new name[MAX_PLAYER_NAME+1];
+			name = GetPlayerName(playerid);
 			new
 				filename[64] = USER_FILE_PATH "ind_X.YSI";
 			Player_GetIndexFile(filename, name[0]);

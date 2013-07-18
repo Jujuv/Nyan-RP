@@ -10,6 +10,7 @@
 stock strs(str1[], str2[], bool:ignorecase = true)//Indique si 2 chaines de carractéres sont identiques (copié de dracoBlue)
 {
     if (strlen(str1) != strlen(str2)) return false;
+	if (strlen(str1) < 1) return false;
     if (!strcmp(str1, str2, ignorecase)) return true;
     return false;
 }

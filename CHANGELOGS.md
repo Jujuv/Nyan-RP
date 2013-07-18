@@ -59,12 +59,20 @@ Version 1
 	*Ajout de divers dialogues nécéssaires aux fonctionalités précédamant cités
 	*Supression de la fonction RefreshPlayerName()
 	
-### Milsetone 10A (1#M10A)
+### Milestone 10A (1#M10A)
 	*Reorganisations mineurs du script
-	*Ajout de la bibliotheuqe n_tweaks
 	*Supression de la bibliotheqe n_carparts
+	*Supression de la Uvar pName
 	*Edition de la fonction INTERNAL_RegisterVehicle() (début d'ajout de sauvegarde du tunning)
-	*Le nom du joueur n'est plus stocke dans une Uvar
+	*Edition des changelogs
+	*Ajout de la bibliotheque n_tweaks
 	*Ajout de la fonction KickEx()
 	*Ajout de la fonction NYAN_Ban()
-	*Ré-écriture des changelogs
+	
+### Milestone 11A (1#M11A)
+	*Edition de la mise en page dans NyanRP_GM
+	*Edition de la mise en page dans n_dialogs
+	*Edition de la mise en page dans n_tweaks
+	*Edition de la mise en page dans nyanrp
+	*Edition majeure de l'arboresence des dossiers et fichiers
+	*Editions minimes dans n_dialogs

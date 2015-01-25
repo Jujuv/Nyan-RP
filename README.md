@@ -2,13 +2,13 @@
 
 Nyan-RP est un script déstiné au mod San Andreas Multiplayer et crée en Pawn.
 
-Nyan-RP est un GM de type RP cree dans le seul but d'etre partage pubiquement et de divertir son auteur.
+Nyan-RP est un GM de type RP crée dans le seul but d'être partagé publiquement et de divertir son auteur.
 Nyan-RP est l'oeuvre de Jujuv/Yuripe.
 
-Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet Another RP" (YAN-RP) à la-quel est venu
+Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet Another RP" (YAN-RP) à laquel est venue
 s'ajouter la lettre "N" pour réaliser un jeu de mot avec le mot japonais "nyan" (litéralement "miaou")
 
-Rien ne vous oblige à laisser ces credits originaux, votre conscience est seul maitre de vos choix.
+Rien ne vous oblige à laisser ces credits originaux, votre conscience est seul maitresse de vos choix.
 Toute fois, si vous décidez de retirer ces credits vous aurez, à mes yeux, fait la preuve d'une proffonde stupidité.
 
 @English readers: English Version of Nyan-RP is no longuer in the project.

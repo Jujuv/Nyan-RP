@@ -9,7 +9,6 @@ Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet
 s'ajouter la lettre "N" pour réaliser un jeu de mot avec le mot japonais "nyan" (litéralement "miaou")
 
 Rien ne vous oblige à laisser ces credits originaux, votre conscience est seul maitresse de vos choix.
-Toute fois, si vous décidez de retirer ces credits vous aurez, à mes yeux, fait la preuve d'une proffonde stupidité.
 
 @English readers: English Version of Nyan-RP is no longuer in the project.
 

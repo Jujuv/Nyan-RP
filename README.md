@@ -8,9 +8,9 @@ Nyan-RP est l'oeuvre de Jujuv/Yuripe.
 Le nom Nyan-RP viens à l'origine de la contraction de l'expresion anglaise "Yet Another RP" (YAN-RP) à laquel est venue
 s'ajouter la lettre "N" pour réaliser un jeu de mot avec le mot japonais "nyan" (litéralement "miaou")
 
-Rien ne vous oblige à laisser ces credits originaux, votre conscience est seul maitresse de vos choix.
+Rien ne vous oblige à laisser ces credits originaux, votre conscience est seule maitresse de vos choix.
 
-@English readers: English Version of Nyan-RP is no longuer in the project.
+@English readers: English Version of Nyan-RP is no longuer supported.
 
 #Présentation longue
 Si vous désirez en savoir plus sur Nyan-RP, merci de visiter la page ["A propos de Nyan-RP"](https://github.com/Jujuv/Nyan-RP/wiki/A-propos-de-Nyan-RP) sur le Wiki du projet.
